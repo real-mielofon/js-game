@@ -159,6 +159,7 @@ class Level {
     if (flagExit === 'wall') {
       return 'wall';
     }
+    return undefined;
   }
   removeActor(actor) {
     if (!(actor instanceof Actor)) {
@@ -269,10 +270,10 @@ class Fireball extends Actor {
       throw new Error('Обьект не является типом Level', grid);
     }
     let nextPos = this.getNextPosition(time);
-    if (grid.obstacleAt(nextPos, this.size)) {
-      this.speed = this.handleObstacle();
-    } else {
+    if (!grid.obstacleAt(nextPos, this.size)) {
       this.pos = nextPos;
+    } else {
+      this.handleObstacle();
     }
   }
 
@@ -294,6 +295,17 @@ class FireRain extends Fireball {
   }
   handleObstacle() {
     this.pos = this.start;
+  }
+  act(time, grid) {
+    if (grid instanceof Level) {
+      throw new Error('Обьект не является типом Level', grid);
+    }
+    let nextPos = this.getNextPosition(time);
+    if (grid.obstacleAt(nextPos, this.size)) {
+      this.handleObstacle();
+    } else {
+      this.pos = nextPos;
+    }
   }
 }
 class Coin extends Actor {
@@ -329,19 +341,35 @@ class Player extends Actor {
     return 'player';
   }
 }
-const schema = [
-  '         ',
-  '         ',
-  '         ',
-  '         ',
-  '     !xxx',
-  ' @       ',
-  'xxx!     ',
-  '         '
+const schemas = [
+  [
+    '         ',
+    '         ',
+    '    =    ',
+    '       o ',
+    '  @  !xxx',
+    '         ',
+    'xxx!     ',
+    '         '
+  ],
+  [
+    '      v  ',
+    '    v    ',
+    '  v      ',
+    '        o',
+    '        x',
+    '@   x    ',
+    'x        ',
+    '         '
+  ]
 ];
 const actorDict = {
-  '@': Player
+  '@': Player,
+  'v': FireRain,
+  '=': HorizontalFireball,
+  'o': Coin
+
 }
 const parser = new LevelParser(actorDict);
-const level = parser.parse(schema);
-runLevel(level, DOMDisplay);
+runGame(schemas, parser, DOMDisplay)
+  .then(() => console.log('Вы выиграли приз!'));
