@@ -145,11 +145,19 @@ class Level {
     if (Math.ceil(obstacle.right) > this.width) {
       return 'wall';
     }
-    if (this.grid[Math.round(position.y)][Math.round(position.x)] === 'wall') {
-      return 'wall';
+    let flagExit;
+    for (let x = Math.floor(obstacle.left); x <= Math.floor(obstacle.right); x++) {
+      for (let y = Math.floor(obstacle.top); y <= Math.floor(obstacle.bottom); y++) {
+        if (this.grid[y][x] === 'lava') {
+          return 'lava';
+        }
+        if (this.grid[y][x] === 'wall') {
+          flagExit = 'wall';
+        }
+      }
     }
-    if (this.grid[Math.round(position.y)][Math.round(position.x)] === 'lava') {
-      return 'lava';
+    if (flagExit === 'wall') {
+      return 'wall';
     }
   }
   removeActor(actor) {
