@@ -77,8 +77,14 @@ class Actor {
     if (actor === this) {
       return false;
     }
-    if (((actor.left <= this.left) && (actor.right > this.left)) || ((actor.left > this.left) && (actor.right > this.left)) || ((actor.left < this.right) && (actor.right >= this.right)) || ((actor.left <= this.left) && (actor.right >= this.right))) {
-      if (((actor.top <= this.top) && (actor.bottom > this.top)) || ((actor.top > this.top) && (actor.bottom < this.bottom)) || ((actor.top < this.bottom) && (actor.bottom >= this.bottom)) || ((actor.top <= this.top) && (actor.bottom >= this.bottom))) {
+    if (((actor.left <= this.left) && (actor.right > this.left)) ||
+      ((actor.left > this.left) && (actor.right > this.left)) ||
+      ((actor.left < this.right) && (actor.right >= this.right)) ||
+      ((actor.left <= this.left) && (actor.right >= this.right))) {
+      if (((actor.top <= this.top) && (actor.bottom > this.top)) ||
+        ((actor.top > this.top) && (actor.bottom < this.bottom)) ||
+        ((actor.top < this.bottom) && (actor.bottom >= this.bottom)) ||
+        ((actor.top <= this.top) && (actor.bottom >= this.bottom))) {
         return true;
       }
     }
