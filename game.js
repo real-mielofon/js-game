@@ -265,10 +265,7 @@ class Fireball extends Actor {
     this.speed = new Vector(-this.speed.x, -this.speed.y);
     return this.speed;
   }
-  act(time, grid) {
-    if (grid instanceof Level) {
-      throw new Error('Обьект не является типом Level', grid);
-    }
+  act(time = 1, grid) {
     let nextPos = this.getNextPosition(time);
     if (!grid.obstacleAt(nextPos, this.size)) {
       this.pos = nextPos;
@@ -291,17 +288,14 @@ class VerticalFireball extends Fireball {
 class FireRain extends Fireball {
   constructor(position) {
     super(position, new Vector(0, 3));
-    this.start = position;
+    this.start = new Vector(position.x, -1);
   }
   handleObstacle() {
     this.pos = this.start;
   }
   act(time, grid) {
-    if (grid instanceof Level) {
-      throw new Error('Обьект не является типом Level', grid);
-    }
     let nextPos = this.getNextPosition(time);
-    if (grid.obstacleAt(nextPos, this.size)) {
+    if (grid.obstacleAt(nextPos, this.size) === 'lava') {
       this.handleObstacle();
     } else {
       this.pos = nextPos;
