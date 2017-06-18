@@ -78,7 +78,7 @@ class Actor {
       return false;
     }
     if (((actor.left <= this.left) && (actor.right > this.left)) ||
-      ((actor.left > this.left) && (actor.right > this.left)) ||
+      ((actor.left > this.left) && (actor.right < this.right)) ||
       ((actor.left < this.right) && (actor.right >= this.right)) ||
       ((actor.left <= this.left) && (actor.right >= this.right))) {
       if (((actor.top <= this.top) && (actor.bottom > this.top)) ||
@@ -341,8 +341,8 @@ const schemas = [
     '         ',
     '    =    ',
     '       o ',
-    '  @  !xxx',
-    '         ',
+    '     !xxx',
+    ' @       ',
     'xxx!     ',
     '         '
   ],
