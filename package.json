@@ -5,12 +5,20 @@
   "main": "index.html",
   "scripts": {
     "start": "browser-sync start --server --files \"**/*.*\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require babel-polyfill --compilers js:babel-register"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.18.8"
+    "babel-cli": "^6.24.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.5.2",
+    "babel-register": "^6.24.1",
+    "browser-sync": "^2.18.8",
+    "chai": "^4.0.2"
+  },
+  "dependencies": {
+    "mocha": "^3.4.2"
   }
 }
